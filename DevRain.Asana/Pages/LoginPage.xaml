@@ -1,0 +1,90 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="DevRain.Asana.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Preview="clr-namespace:Phone7.Fx.Controls;assembly=Phone7.Fx"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:DevRain.Asana.XAML"
+    xmlns:Behaviors="clr-namespace:DevRain.WP.Core.XAML.Behaviors;assembly=DevRain.WP.Core"
+    xmlns:Controls="clr-namespace:DevRain.WP.Core.Controls;assembly=DevRain.WP.Core"
+    Style="{StaticResource DefaultPhoneApplicationPage}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d"
+ >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,0,0,28">
+            <TextBlock Text="{StaticResource AppName}" Style="{StaticResource SmallPhoneTextTitle1Style}"/>
+            <TextBlock Text="login" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--<telerikPrimitives:RadBusyIndicator IsRunning="true" AnimationStyle="AnimationStyle9" VerticalAlignment="Top" Name="busyIndicator"/>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0" Visibility="Collapsed">
+   
+            <Grid>
+                <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    
+
+                    </Grid.RowDefinitions>
+                
+    
+
+                <TextBlock Text="Client for task management service Asana" Margin="12,0,0,0" FontSize="24" />
+
+                <Image Source="/Images/Asana-logo.png" Stretch="UniformToFill"  Width="300" Grid.Row="1" Margin="0,18,0,0"/>
+
+                <TextBlock Text="Set your API key to log in:" Margin="12,24,0,0" Grid.Row="2"/>
+                
+            <TextBox Text="{Binding ApiKey,Mode=TwoWay}" Margin="0,10,0,0" InputScope="Text" Grid.Row="3" KeyUp="TextBox_KeyUp_1" Name="tbApiKey">
+                <i:Interaction.Behaviors>
+                    <Behaviors:UpdateSourceOnTextChangedBehavior />
+                </i:Interaction.Behaviors>
+            </TextBox>
+
+                <TextBlock Margin="12,18,0,0" FontSize="{StaticResource PhoneFontSizeSmall}" Grid.Row="4" TextWrapping="Wrap">
+                    You can find API key in Asana web application (not available with Internet Explorer):
+                </TextBlock>
+
+                <TextBlock Margin="12,6,0,0" FontSize="{StaticResource PhoneFontSizeNormal}" Grid.Row="5" TextWrapping="Wrap">
+                   Account Settings - API
+                </TextBlock>
+
+            </Grid>
+                
+        </Grid>
+
+        <Controls:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0" Mode="Default" >
+            <Controls:BindableApplicationBar.Items>
+                <Controls:BindableApplicationBarIconButton IconUri="/Images/check.png" x:Name="btnLogin" Click="BtnLogin_OnClick" Text="login"/>
+
+            </Controls:BindableApplicationBar.Items>
+            <Controls:BindableApplicationBar.MenuItems>
+                <Controls:BindableApplicationBarMenuItem  Text="login with test account" x:Name="btnTestLogin" Click="BtnTestLogin_OnClick"/>
+                <Controls:BindableApplicationBarMenuItem  Text="about" Command="{Binding AboutCommand}"/>
+            </Controls:BindableApplicationBar.MenuItems>
+        </Controls:BindableApplicationBar>
+
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

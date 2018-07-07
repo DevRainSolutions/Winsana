@@ -1,0 +1,33 @@
+﻿<telerik:MyRadWindow x:Class="DevRain.Asana.Controls.ProjectDescriptionPopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:telerik="clr-namespace:DevRain.WP.Telerik;assembly=DevRain.WP.Telerik"
+                     xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+                     xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+                     mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+                               IsFullScreen="True"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Placement="CenterCenter" 
+                             WindowSizeMode="FitToPlacementTarget"
+    d:DesignHeight="480" d:DesignWidth="480">
+	<telerikPrimitives:RadWindow.OpenAnimation>
+		<telerikCore:RadSlideContinuumAnimation
+                                      Duration="0:0:0.2" />
+	</telerikPrimitives:RadWindow.OpenAnimation>
+	<telerikPrimitives:RadWindow.CloseAnimation>
+		<telerikCore:RadSlideContinuumAnimation 
+                                      InOutAnimationMode="Out"
+                                      Duration="0:0:0.2" />
+	</telerikPrimitives:RadWindow.CloseAnimation>
+	<Grid Background="{StaticResource PhoneChromeBrush}" >
+		
+		<TextBlock Name="tbDescription" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="26" Margin="12"/>
+
+    </Grid>
+</telerik:MyRadWindow>

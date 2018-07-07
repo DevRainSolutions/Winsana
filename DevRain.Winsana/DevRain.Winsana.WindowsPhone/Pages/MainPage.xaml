@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="DevRain.Winsana.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DevRain.Winsana.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Page.BottomAppBar>
+       <CommandBar>
+           <CommandBar.SecondaryCommands>
+               <AppBarButton Label="settings" Command="{Binding GoToSettingsPageCommand}"/>
+                <AppBarButton Label="about" Command="{Binding GoToAboutPageCommand}"/>
+            </CommandBar.SecondaryCommands>
+       </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid>
+
+        <Pivot Name="pivot">
+            <PivotItem Header="workspaces">
+                <ListBox ItemsSource="{Binding Workspaces}"  Name="lstWorkspaces"  Margin="12,0,0,0" SelectionChanged="LstWorkspaces_OnSelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,16" Height="40">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding name}" />
+                                    <TextBlock Text="{Binding ProjectsCountText}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </PivotItem>
+
+            <PivotItem Header="my tasks" Name="myTasksPivotItem">
+                <ListBox ItemsSource="{Binding MyTasks}" Name="lstMyTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}" >
+       
+                </ListBox>
+
+            </PivotItem>
+
+            <PivotItem Header="due today">
+                <ListBox ItemsSource="{Binding DueTodayTasks}"  Name="lstDueTodayTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}"  >
+                 
+                </ListBox>
+
+            </PivotItem>
+
+            <PivotItem Header="due tomorrow">
+                <ListBox ItemsSource="{Binding DueTomorrowTasks}"   Name="lstDueTomorrowTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}"  >
+                   
+                </ListBox>
+
+            </PivotItem>
+
+            <PivotItem Header="due weekend">
+                <ListBox ItemsSource="{Binding DueWeekendTasks}"   Name="lstDueWeekendTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}"  >
+                  
+                </ListBox>
+
+            </PivotItem>
+
+            <PivotItem Header="users">
+                <ListBox ItemsSource="{Binding Users}"   Name="lstUsers" Margin="12,0,0,0" >
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,16">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding name}"  />
+                                    <TextBlock Text="{Binding TasksCountText}"  Foreground="{StaticResource GrayBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+            </PivotItem>
+
+        </Pivot>
+
+    </Grid>
+</Page>

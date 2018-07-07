@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="DevRain.Winsana.Pages.ProjectDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DevRain.Winsana.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    
+    
+    <Page.BottomAppBar>
+            <CommandBar>
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Command="{Binding RefreshCommand}" Label="refresh"/>
+                    <AppBarButton Command="{Binding AddTaskCommand}" Label="add task"/>
+                    <AppBarButton Command="{Binding ProjectsCommand}" Label="projects"/>
+                    
+                </CommandBar.PrimaryCommands>
+                
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Label="edit project" Command="{Binding EditProjectCommand}"/>
+                    <AppBarButton Label="show project note" Command="{Binding ShowProjectDescriptionCommand}"/>
+                    <AppBarButton Label="go to home" Command="{Binding GoToMainPageCommand}"/>
+                    <AppBarButton Label="{Binding PinButtonText}" Command="{Binding PinToStartCommand}"/>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+
+    </Page.BottomAppBar>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,0,0,0">
+            <!--<TextBlock x:Name="ApplicationTitle" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+            <TextBlock x:Name="PageTitle" Text="{Binding Project.name,Converter={StaticResource ToUpperConverter}}" />
+            <!--<TextBlock Text="{Binding Project.notes}" Margin="12,0,0,0" TextWrapping="Wrap" Foreground="{StaticResource GrayBrush}"/>-->
+        </StackPanel>
+
+        <!--<telerikPrimitives:RadBusyIndicator IsRunning="{Binding IsBusy}" AnimationStyle="AnimationStyle9" VerticalAlignment="Top"/>-->
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,-6,0,0">
+
+
+            <Pivot>
+                <PivotItem Header="active">
+
+                    <ListBox ItemsSource="{Binding ActiveTasks}"  Name="lstActiveTasks" SelectionChanged="LstActiveTasks_OnSelectionChanged" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}">
+
+                     
+                    </ListBox>
+
+
+                </PivotItem>
+
+                <PivotItem Header="completed">
+                    <ListBox ItemsSource="{Binding CompletedTasks}"  Name="lstCompletedTasks" SelectionChanged="LstActiveTasks_OnSelectionChanged" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}">
+
+                        </ListBox>
+                </PivotItem>
+
+                <PivotItem Header="all tasks">
+                    <ListBox ItemsSource="{Binding Tasks}" Name="lstAllTasks" SelectionChanged="LstActiveTasks_OnSelectionChanged"  Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}">
+
+                    </ListBox>
+                </PivotItem>
+
+
+         
+            </Pivot>
+
+
+
+
+        </Grid>
+
+
+    </Grid>
+
+</Page>

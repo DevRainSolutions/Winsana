@@ -1,0 +1,148 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="DevRain.Asana.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    
+    xmlns:appcontrols="clr-namespace:DevRain.Asana.API;assembly=DevRain.Asana.API"
+    
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    
+    xmlns:Controls="clr-namespace:DevRain.WP.Core.Controls;assembly=DevRain.WP.Core"
+    xmlns:toolkit="clr-namespace:DevRain.WP.Core.Controls.Transitions;assembly=DevRain.WP.Core"
+    xmlns:telerik="clr-namespace:DevRain.WP.Telerik;assembly=DevRain.WP.Telerik" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    Style="{StaticResource DefaultPhoneApplicationPage}"
+>
+
+
+	<!--<toolkit:TransitionService.NavigationInTransition>
+
+		<toolkit:NavigationInTransition>
+
+
+		</toolkit:NavigationInTransition>
+
+	</toolkit:TransitionService.NavigationInTransition>-->
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,0,0,0">
+            <TextBlock x:Name="ApplicationTitle" Text="{StaticResource AppName}" Style="{StaticResource SmallPhoneTextTitle1Style}"/>
+        </StackPanel>
+
+
+        <telerikPrimitives:RadBusyIndicator IsRunning="{Binding IsBlockingProgress}"  AnimationStyle="AnimationStyle6" Content="Loading data first time" VerticalAlignment="Center"  FontSize="26" Grid.RowSpan="2"/>
+        <!--<telerikPrimitives:RadBusyIndicator IsRunning="{Binding IsBusy}" AnimationStyle="AnimationStyle9" VerticalAlignment="Top"/>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,-6,0,0" Visibility="{Binding IsBlockingProgress, Converter={StaticResource OppositeBoolToVisibilityConverter}}">
+            <phone:Pivot Name="pivot">
+                <phone:PivotItem Header="workspaces">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding Workspaces}" EmptyContent="" Name="lstWorkspaces" SelectionChanged="LstWorkspaces_OnSelectionChanged" Margin="12,0,0,0">
+                        <i:Interaction.Behaviors>
+                            <telerik:ResetRadDataBoundListBoxBehavior />
+                        </i:Interaction.Behaviors>
+                        <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,16">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding name}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                                        <TextBlock Text="{Binding ProjectsCountText}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource GrayBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                    </telerikPrimitives:RadDataBoundListBox>
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="my tasks" Name="myTasksPivotItem">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding MyTasks}" EmptyContent=""  Name="lstMyTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}" SelectionChanged="LstMyTasks_OnSelectionChanged" >
+						<i:Interaction.Behaviors>
+							<telerik:ResetRadDataBoundListBoxBehavior />
+						</i:Interaction.Behaviors>
+					</telerikPrimitives:RadDataBoundListBox>
+
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="due today">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding DueTodayTasks}" EmptyContent=""  Name="lstDueTodayTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}" SelectionChanged="LstMyTasks_OnSelectionChanged" >
+                        <i:Interaction.Behaviors>
+                            <telerik:ResetRadDataBoundListBoxBehavior />
+                        </i:Interaction.Behaviors>
+                    </telerikPrimitives:RadDataBoundListBox>
+
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="due tomorrow">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding DueTomorrowTasks}" EmptyContent=""  Name="lstDueTomorrowTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}" SelectionChanged="LstMyTasks_OnSelectionChanged" >
+                        <i:Interaction.Behaviors>
+                            <telerik:ResetRadDataBoundListBoxBehavior />
+                        </i:Interaction.Behaviors>
+                    </telerikPrimitives:RadDataBoundListBox>
+
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="due weekend">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding DueWeekendTasks}" EmptyContent=""  Name="lstDueWeekendTasks" Margin="0,0,0,0" ItemTemplate="{StaticResource TaskItemTemplate}" SelectionChanged="LstMyTasks_OnSelectionChanged" >
+                        <i:Interaction.Behaviors>
+                            <telerik:ResetRadDataBoundListBoxBehavior />
+                        </i:Interaction.Behaviors>
+                    </telerikPrimitives:RadDataBoundListBox>
+
+                </phone:PivotItem>
+
+                <phone:PivotItem Header="users">
+                    <telerikPrimitives:RadDataBoundListBox ItemsSource="{Binding Users}" EmptyContent=""  Name="lstUsers" Margin="12,0,0,0" SelectionChanged="LstUsers_OnSelectionChanged">
+                        <i:Interaction.Behaviors>
+                            <telerik:ResetRadDataBoundListBoxBehavior />
+                        </i:Interaction.Behaviors>
+                        <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,16">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding name}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                                        <TextBlock Text="{Binding TasksCountText}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource GrayBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </telerikPrimitives:RadDataBoundListBox.ItemTemplate>
+                    </telerikPrimitives:RadDataBoundListBox>
+
+                </phone:PivotItem>
+
+            </phone:Pivot>
+            
+        </Grid>
+
+        <Controls:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0" Mode="Default" IsVisible="{Binding IsAppBarVisible}" >
+
+            <Controls:BindableApplicationBar.Items>
+                <Controls:BindableApplicationBarIconButton IconUri="/Images/refresh.png" x:Name="btnRefresh" Command="{Binding RefreshCommand}"  Text="refresh"/>
+                <Controls:BindableApplicationBarIconButton IconUri="/Images/add.png" x:Name="btnAddTask" Command="{Binding AddTaskCommand}" Text="add task"/>
+
+            </Controls:BindableApplicationBar.Items>
+
+            <Controls:BindableApplicationBar.MenuItems>
+				<Controls:BindableApplicationBarMenuItem  Text="all tasks" Command="{Binding AllTasksCommand}"/>
+				<Controls:BindableApplicationBarMenuItem  Text="settings" Command="{Binding SettingsCommand}"/>
+                <Controls:BindableApplicationBarMenuItem  Text="about" Command="{Binding AboutCommand}"/>
+            </Controls:BindableApplicationBar.MenuItems>
+
+        </Controls:BindableApplicationBar>
+
+    </Grid>
+ 
+</phone:PhoneApplicationPage>
